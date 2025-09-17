@@ -1,0 +1,306 @@
+文件效率优化
+环境：api-test
+云文档普通上传：
+1、上传rvt文件-第一个
+fileid:1e9c1e8bf00a407fb4acd4e33e3fba53
+wsid：ca683ece9e1c4a62a755803d6d282f8e
+版本号：1
+"storeId": "db8c0d94048f494d9208eaad05b5789f",
+"digest": "db8c0d94048f494d9208eaad05b5789f",
+"md5": "23428cf4b99b642a9c7c7a12f7b2feb9"
+"createTime": 1749708436198
+name": "rvt1.rvt"
+
+第二个：
+  "fileId": "dbed5e2f43a14ba5a3f58e9818a52a27",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "rvt2.rvt",
+        "suffix": "rvt",
+        "folder": false,
+        "length": 5132288,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749708813186,
+        "storeId": "db8c0d94048f494d9208eaad05b5789f",
+        "digest": "db8c0d94048f494d9208eaad05b5789f",
+        "thumbnail": null,
+        "versionIndex": 1,
+        "ownerId": "NONE",
+        "md5": "23428cf4b99b642a9c7c7a12f7b2feb9",
+
+
+2、上传文件GBQ5-/GBQ5_test2.GBQ5
+
+  "fileId": "855d08c50cc5471eb6969104bd54fc32",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "GBQ5_test2.GBQ5",
+        "suffix": "GBQ5",
+        "folder": false,
+        "length": 732973,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749708934678,
+        "storeId": "44000ffb06604f1f9eccdd2bf94c8a3c",
+        "digest": "44000ffb06604f1f9eccdd2bf94c8a3c",
+        "thumbnail": null,
+        "versionIndex": 1,
+        "ownerId": "NONE",
+        "md5": "d38a785e2e2dc6ea9ff1d54440619215",
+
+3、外链上传文件-GBQ5
+
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "id": "4ad667d2ee5544249be50d501058996e",
+        "fileList": {
+            "success": [
+                {
+                    "fileId": "2b9a46b73272484fa0050f5061e10f22",
+                    "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+                    "name": "uploadsignurl——GBQ5——test1.gbq5",
+                    "suffix": "gbq5",
+                    "folder": false,
+                    "length": 4371299,
+                    "parentId": "6adb14e873f340faa59ec6da6d10bf8c",
+                    "appKey": null,
+                    "creatorId": "6701414126844703553",
+                    "creatorName": null,
+                    "createTime": 1749711319936,
+                    "storeId": "b71cd957a958476ba089a64b6891e489",
+                    "digest": "b71cd957a958476ba089a64b6891e489",
+                    "thumbnail": null,
+                    "versionIndex": 1,
+                    "ownerId": "NONE",
+                    "md5": "4494908096d664e7ffc80125f04ad18c",
+                    "originalCreatorId": "6701414126844703553",
+                    "originalCreatorName": null,
+                    "originalCreateTime": 1749711319936,
+                    "modifyTime": 1749711319936,
+                    "modifierId": "6701414126844703553",
+                    "modifierName": null,
+                    "revisionId": "2b9a46b73272484fa0050f5061e10f22",
+                    "current": true,
+                    "alias": null,
+                    "index": 1
+                }
+            ],
+            "failure": []
+        }
+    }
+}
+
+4、断点续传-RVT文件
+
+
+        "fileId": "9f8c59c9444641829e7f156b19fa3cac",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "appendfile_test1.rvt",
+        "suffix": "rvt",
+        "folder": false,
+        "length": 5132288,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": "6701414126844703553",
+        "creatorName": "GLODON-1-7QCWKV",
+        "createTime": 1749711155330,
+        "storeId": "db8c0d94048f494d9208eaad05b5789f",
+        "digest": "db8c0d94048f494d9208eaad05b5789f",
+        "thumbnail": null,
+        "versionIndex": 1,
+        "ownerId": "NONE",
+        "md5": null,
+        "originalCreatorId": "6701414126844703553",
+        "originalCreatorName": "GLODON-1-7QCWKV",
+        "originalCreateTime": 1749711155330,
+        "modifyTime": 1749711155330,
+        "modifierId": "6701414126844703553",
+        "modifierName": "GLODON-1-7QCWKV",
+        "revisionId": "9f8c59c9444641829e7f156b19fa3cac",
+		
+5、重复文件
+		外链上传文件-GBQ5
+		{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "id": "39582f88b3c64041b476c36843485a0d",
+        "fileList": {
+            "success": [
+                {
+                    "fileId": "2b9a46b73272484fa0050f5061e10f22",
+                    "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+                    "name": "uploadsignurl——GBQ5——test1.gbq5",
+                    "suffix": "gbq5",
+                    "folder": false,
+                    "length": 4371299,
+                    "parentId": "6adb14e873f340faa59ec6da6d10bf8c",
+                    "appKey": null,
+                    "creatorId": "6701414126844703553",
+                    "creatorName": null,
+                    "createTime": 1749711936985,
+                    "storeId": "b71cd957a958476ba089a64b6891e489",
+                    "digest": "b71cd957a958476ba089a64b6891e489",
+                    "thumbnail": null,
+                    "versionIndex": 2,
+                    "ownerId": "NONE",
+                    "md5": "4494908096d664e7ffc80125f04ad18c",
+                    "originalCreatorId": "6701414126844703553",
+                    "originalCreatorName": null,
+                    "originalCreateTime": 1749711320000,
+                    "modifyTime": 1749711936985,
+                    "modifierId": "6701414126844703553",
+                    "modifierName": null,
+                    "revisionId": "94802fa86fda4944a190c4eb5d85d6b0",
+                    "current": true,
+                    "alias": null,
+                    "index": 2
+                }
+            ],
+            "failure": []
+        }
+    }
+}
+
+filedata-重复文件
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "fileId": "855d08c50cc5471eb6969104bd54fc32",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "GBQ5_test2.GBQ5",
+        "suffix": "GBQ5",
+        "folder": false,
+        "length": 4371299,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749712040698,
+        "storeId": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "digest": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "thumbnail": null,
+        "versionIndex": 2,
+        "ownerId": "NONE",
+        "md5": "4494908096d664e7ffc80125f04ad18c",
+        "originalCreatorId": null,
+        "originalCreatorName": null,
+        "originalCreateTime": 1749708935000,
+        "modifyTime": 1749712040698,
+        "modifierId": null,
+        "modifierName": null,
+        "revisionId": "85a18072db2140ed8c93436e61189852",
+        "current": true,
+        "alias": null,
+        "index": 2
+    }
+}
+
+	{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "fileId": "855d08c50cc5471eb6969104bd54fc32",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "GBQ5_test2.GBQ5",
+        "suffix": "GBQ5",
+        "folder": false,
+        "length": 4371299,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749712049465,
+        "storeId": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "digest": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "thumbnail": null,
+        "versionIndex": 3,
+        "ownerId": "NONE",
+        "md5": "4494908096d664e7ffc80125f04ad18c",
+        "originalCreatorId": null,
+        "originalCreatorName": null,
+        "originalCreateTime": 1749708935000,
+        "modifyTime": 1749712049465,
+        "modifierId": null,
+        "modifierName": null,
+        "revisionId": "9874945bbb2d44e580da7e6d8b739223",
+        "current": true,
+        "alias": null,
+        "index": 3
+    }
+}	
+	
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "fileId": "855d08c50cc5471eb6969104bd54fc32",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "GBQ5_test2.GBQ5",
+        "suffix": "GBQ5",
+        "folder": false,
+        "length": 4371299,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749712076351,
+        "storeId": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "digest": "53c2dfb02ec144fdb5869b18784e1b8e",
+        "thumbnail": null,
+        "versionIndex": 4,
+        "ownerId": "NONE",
+        "md5": "4494908096d664e7ffc80125f04ad18c",
+        "originalCreatorId": null,
+        "originalCreatorName": null,
+        "originalCreateTime": 1749708935000,
+        "modifyTime": 1749712076351,
+        "modifierId": null,
+        "modifierName": null,
+        "revisionId": "be7e19cdd104472b974655d861aadfe5",
+        "current": true,
+        "alias": null,
+        "index": 4
+    }
+}	
+未上传的新文件-txt
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "fileId": "1ba630a48c2f451d8cbdc67c9f4cdb61",
+        "workspaceId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "name": "txt_test1.txt",
+        "suffix": "txt",
+        "folder": false,
+        "length": 9441,
+        "parentId": "ca683ece9e1c4a62a755803d6d282f8e",
+        "appKey": null,
+        "creatorId": null,
+        "creatorName": null,
+        "createTime": 1749714036522,
+        "storeId": "590cd860a4f34045825aff2100c9d5ce",
+        "digest": "590cd860a4f34045825aff2100c9d5ce",
+        "thumbnail": null,
+        "versionIndex": 1,
+        "ownerId": "NONE",
+        "md5": "78fe182cc696ba5785fbf5954d75f92c",
+        "originalCreatorId": null,
+        "originalCreatorName": null,
+        "originalCreateTime": 1749714036522,
+        "modifyTime": 1749714036522,
+        "modifierId": null,
+        "modifierName": null,
+        "revisionId": "1ba630a48c2f451d8cbdc67c9f4cdb61",
+        "current": true,
+        "alias": null,
+        "index": 1
+    }
+}
+		

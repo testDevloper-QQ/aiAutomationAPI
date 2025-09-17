@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "5dc4ebff-cf2f-4f85-9a98-853b57c0673d",
+		"name": "空间组件-测试环境",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3694804",
+		"_collection_link": "https://universal-robot-482369.postman.co/workspace/fc1856ea-e148-4a13-86d9-ca271f527c19/collection/3694804-5dc4ebff-cf2f-4f85-9a98-853b57c0673d?action=share&source=collection_link&creator=3694804"
+	},
+	"item": [
+		{
+			"name": "测试环境-gws-空间创建",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cn-951fec12-c713-44b6-8349-3b98b37afb9e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"gyptest\",\r\n    \"description\":\"gyptest\",\r\n    \"type\":2,\r\n    \"privilegeType\":15,\r\n    \"creatorId\":\"6656471928718188820\",\r\n    \"workspaceBusinessReq\":{\r\n        \"wsType\":\"0\",\r\n        \"enterpriseId\":\"111\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.glodon.com/v3/ws/business/create",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"glodon",
+						"com"
+					],
+					"path": [
+						"v3",
+						"ws",
+						"business",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试环境-gws-空间查询",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cn-951fec12-c713-44b6-8349-3b98b37afb9e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"wsTypes\":\"0\",\r\n    \"enterpriseId\":\"111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.glodon.com/v3/ws/business/",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"glodon",
+						"com"
+					],
+					"path": [
+						"v3",
+						"ws",
+						"business",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试环境-gws-获取指定空间的业务空间数据",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cn-951fec12-c713-44b6-8349-3b98b37afb9e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.glodon.com/v3/ws/business/3bfb43f0177a45cc93695a74dbce1596",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"glodon",
+						"com"
+					],
+					"path": [
+						"v3",
+						"ws",
+						"business",
+						"3bfb43f0177a45cc93695a74dbce1596"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试环境-删除空间-批量",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cn-951fec12-c713-44b6-8349-3b98b37afb9e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"2eca0a2b5faf4ad3aabd2c2d30ac1e6b\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.glodon.com/v3/ws/v4/service/workspaces/batch?force=true&needRecover=true",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"glodon",
+						"com"
+					],
+					"path": [
+						"v3",
+						"ws",
+						"v4",
+						"service",
+						"workspaces",
+						"batch"
+					],
+					"query": [
+						{
+							"key": "force",
+							"value": "true"
+						},
+						{
+							"key": "needRecover",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试环境-gws-恢复空间-批量",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cn-951fec12-c713-44b6-8349-3b98b37afb9e",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"2eca0a2b5faf4ad3aabd2c2d30ac1e6b\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.glodon.com/v3/ws/v4/service/workspaces/recover/batch",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"glodon",
+						"com"
+					],
+					"path": [
+						"v3",
+						"ws",
+						"v4",
+						"service",
+						"workspaces",
+						"recover",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

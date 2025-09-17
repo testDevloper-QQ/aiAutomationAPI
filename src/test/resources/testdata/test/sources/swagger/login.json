@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "登录认证API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/sdk/user/auth_login": {
+      "post": {
+        "summary": "用户登录认证",
+        "description": "用户登录认证",
+        "operationId": "user_auth_login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {"type": "string"},
+                  "password": {"type": "string"},
+                  "productCode": {"type": "string"},
+                  "version": {"type": "string"},
+                  "hardwareId": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "integer"},
+                    "message": {"type": "string"},
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "access_token": {"type": "string"},
+                        "user_id": {"type": "string"},
+                        "expires_in": {"type": "integer"}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "account": {"type": "string"},
+          "password": {"type": "string"},
+          "productCode": {"type": "string"},
+          "version": {"type": "string"},
+          "hardwareId": {"type": "string"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,323 @@
+# 文件上传模块测试场景配置
+# 该文件包含测试场景、环境配置、前置依赖、后置清理等完整配置
+
+# 全局配置
+global:
+  outputDir: src/test/java/apitest/testcases
+  packageName: apitest.testcases
+  moduleName: file_upload
+
+# 环境配置 - 根据file_testdata.yml中的env值自动匹配
+environment:
+  configPath: src/test/resources/apiconfig
+  configFile: env.yml
+  # 环境变量映射，从env.yml中读取对应环境的配置
+  mappings:
+    baseUrl: "${env}.baseUrl"
+    authToken: "${env}.auth.token"
+    timeout: "${env}.timeout"
+    maxRetries: "${env}.maxRetries"
+
+# 数据源配置 - 支持多种数据源自动获取接口信息
+dataSource:
+  # Swagger配置 - 自动读取接口定义
+  swagger:
+    enabled: true
+    basePath: src/main/resources/swagger
+    files:
+      file_api: file.json
+      workspace_api: workspace.json
+      auth_api: auth.json
+    
+    # 接口映射配置
+    mappings:
+      file_upload:
+        path: /api/v1/file/upload
+        method: POST
+        description: 文件上传接口
+        swaggerFile: file_api
+        operationId: uploadFile
+      
+      workspace_create:
+        path: /api/v1/workspace
+        method: POST
+        description: 创建工作空间
+        swaggerFile: workspace_api
+        operationId: createWorkspace
+      
+      auth_login:
+        path: /api/v1/auth/login
+        method: POST
+        description: 用户登录获取token
+        swaggerFile: auth_api
+        operationId: login
+
+  # Postman配置（可选）
+  postman:
+    enabled: false
+    collectionPath: src/main/resources/postman/file_collection.json
+
+  # Excel配置（可选）
+  excel:
+    enabled: false
+    filePath: src/main/resources/excel/file_test_cases.xlsx
+
+# 前置依赖配置
+preConditions:
+  enabled: true
+  
+  # 认证配置
+  auth:
+    enabled: true
+    type: bearer  # bearer, basic, api_key
+    source: token_provider  # 使用TokenProvider类获取token
+    provider: com.apitest.core.TokenProvider  # TokenProvider类路径
+    method: getToken  # 获取token的方法名
+    extract:
+      token: "$.data.token"
+      refreshToken: "$.data.refreshToken"
+
+  # 前置接口依赖
+  dependencies:
+    - name: workspace_setup
+      description: "创建工作空间作为测试前置条件"
+      type: api_call
+      source: swagger
+      endpoint: workspace_create
+      priority: 1
+      required: true
+      parameters:
+        body:
+          name: "测试工作空间_{{timestamp}}"
+          description: "自动化测试创建的工作空间"
+      extract:
+        workspaceId: "$.data.id"
+        workspaceName: "$.data.name"
+      
+    - name: folder_setup
+      description: "创建测试文件夹"
+      type: api_call
+      source: swagger
+      endpoint: folder_create
+      priority: 2
+      required: false
+      depends_on: [workspace_setup]
+      parameters:
+        body:
+          name: "测试文件夹"
+          workspaceId: "{{workspaceId}}"
+      extract:
+        folderId: "$.data.id"
+
+  # 数据准备
+  dataSetup:
+    - name: prepare_test_files
+      description: "准备测试文件"
+      type: file_operation
+      action: copy
+      source: src/test/resources/testdata/test/files/
+      destination: temp/test_files/
+
+# 后置清理配置
+postConditions:
+  enabled: true
+  
+  # 清理策略
+  cleanupStrategy: selective  # selective, cascade, none
+  
+  # 清理任务
+  cleanupTasks:
+    - name: cleanup_workspace
+      description: "清理测试工作空间"
+      type: api_call
+      endpoint: workspace_delete
+      condition: always
+      parameters:
+        path: "/api/v1/workspace/{{workspaceId}}"
+        method: DELETE
+      
+    - name: cleanup_files
+      description: "清理上传的测试文件"
+      type: method_call
+      class: apitest.core.CleanData
+      method: cleanupFiles
+      condition: on_success
+      parameters:
+        fileIds: "{{uploadedFileIds}}"
+        workspaceId: "{{workspaceId}}"
+      
+    - name: cleanup_temp
+      description: "清理临时文件"
+      type: file_operation
+      action: delete
+      path: temp/test_files/
+      condition: always
+
+# 测试场景配置
+testScenarios:
+  file_upload:
+    moduleName: "文件上传模块"
+    description: "文件上传功能完整测试场景"
+    
+    # 测试数据引用
+    testDataFile: src/test/resources/testdata/test/module_testdata/file_testdata.yml
+    
+    # 测试用例分组
+    testGroups:
+      - name: positive_tests
+        description: "正向测试用例"
+        scenarios:
+          - normal_upload
+          - multiple_files
+          - large_file_upload
+        
+      - name: negative_tests
+        description: "异常测试用例"
+        scenarios:
+          - empty_file
+          - invalid_file_type
+          - missing_required_param
+          - invalid_auth
+          - special_chars_filename
+        
+      - name: boundary_tests
+        description: "边界测试用例"
+        scenarios:
+          - max_file_size
+          - long_filename
+          - unicode_filename
+    
+    # 具体测试场景
+    scenarios:
+      normal_upload:
+        description: "正常文件上传"
+        priority: 1
+        enabled: true
+        tags: ["smoke", "regression"]
+        
+        # 接口配置
+        api:
+          endpoint: file_upload
+          method: POST
+          path: /api/v1/file/upload
+          timeout: 30000
+          
+        # 参数映射
+        parameters:
+          path: {}
+          query:
+            workspaceId: "{{workspaceId}}"
+            folderId: "{{folderId}}"
+          body:
+            file: "@{{filePath}}"
+            metadata: "{{metadata}}"
+          
+        # 数据映射
+        dataMapping:
+          test.txt: "normal_upload"
+          test.pdf: "normal_upload"
+          test.jpg: "normal_upload"
+        
+        # 验证配置
+        validation:
+          statusCode: 200
+          responseTime: 5000
+          schema:
+            fileId: "string"
+            fileUrl: "url"
+            fileName: "string"
+            fileSize: "number"
+            uploadTime: "datetime"
+      
+      empty_file:
+        description: "空文件上传测试"
+        priority: 2
+        enabled: true
+        tags: ["regression", "negative"]
+        
+        api:
+          endpoint: file_upload
+          method: POST
+          path: /api/v1/file/upload
+          
+        parameters:
+          query:
+            workspaceId: "{{workspaceId}}"
+          body:
+            file: "@{{empty.txt}}"
+        
+        validation:
+          statusCode: 400
+          errorCode: "FILE_EMPTY"
+          errorMessage: "文件不能为空"
+      
+      large_file_upload:
+        description: "大文件上传测试"
+        priority: 3
+        enabled: true
+        tags: ["regression", "performance"]
+        
+        api:
+          endpoint: file_upload
+          method: POST
+          path: /api/v1/file/upload
+          timeout: 60000
+          
+        parameters:
+          query:
+            workspaceId: "{{workspaceId}}"
+          body:
+            file: "@{{large_file.zip}}"
+        
+        validation:
+          statusCode: 200
+          responseTime: 30000
+          fileSize: 10485760
+      
+      special_chars_filename:
+        description: "特殊字符文件名测试"
+        priority: 4
+        enabled: true
+        tags: ["regression", "boundary"]
+        
+        parameters:
+          query:
+            workspaceId: "{{workspaceId}}"
+          body:
+            file: "@{{special_chars.txt}}"
+        
+        validation:
+          statusCode: 200
+          fileName: "test@#$%^&*.txt"
+      
+      invalid_file_type:
+        description: "无效文件类型测试"
+        priority: 5
+        enabled: true
+        tags: ["regression", "negative"]
+        
+        parameters:
+          query:
+            workspaceId: "{{workspaceId}}"
+          body:
+            file: "@{{invalid.exe}}"
+        
+        validation:
+          statusCode: 415
+          errorCode: "UNSUPPORTED_FILE_TYPE"
+
+# 并发配置
+concurrency:
+  enabled: true
+  maxThreads: 5
+  parallel: methods
+  threadCount: 3
+
+# 报告配置
+reporting:
+  enabled: true
+  formats: ["allure", "html", "json"]
+  includeRequest: true
+  includeResponse: true
+  includeHeaders: true
+  maskSensitive: true

@@ -1,0 +1,196 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "文件存储管理API",
+    "version": "1.0.0",
+    "description": "管理文件存储的API接口"
+  },
+  "servers": [
+    {
+      "url": "https://gccs.glodon.com",
+      "description": "测试环境"
+    }
+  ],
+  "paths": {
+    "/sdk/storage/upload/v1": {
+      "post": {
+        "summary": "上传文件",
+        "description": "上传文件到指定工作空间",
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "gccsToken",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "gccsToken"
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "工作空间ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "要上传的文件"
+                  },
+                  "filename": {
+                    "type": "string",
+                    "description": "文件名"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "文件上传成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "upload success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "file_id": {
+                          "type": "string",
+                          "example": "file_123456"
+                        },
+                        "file_name": {
+                          "type": "string",
+                          "example": "test.txt"
+                        },
+                        "file_size": {
+                          "type": "integer",
+                          "example": 1024
+                        },
+                        "upload_time": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sdk/storage/download/v1/{file_id}": {
+      "get": {
+        "summary": "下载文件",
+        "description": "下载指定文件",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token"
+          },
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "文件ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "文件下载成功",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sdk/storage/file/v1/{file_id}": {
+      "delete": {
+        "summary": "删除文件",
+        "description": "删除指定文件",
+        "operationId": "deleteFile",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token"
+          },
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "文件ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "文件删除成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "delete success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

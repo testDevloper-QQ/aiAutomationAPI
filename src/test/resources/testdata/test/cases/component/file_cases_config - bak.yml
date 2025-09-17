@@ -1,0 +1,88 @@
+orderauthHost: https://order-auth-test.glodon.com
+meHost: https://me-test.glodon.com
+cloudsdkHost: http://cloud-sdk-test.glodon.com
+cloudHost: https://cloud-test.glodon.com
+dlHost: https://dl-auth-test.glodon.com
+zjyHost: https://zjytest.glodon.com
+xmglHost: https://geip-pre.glodon.com
+PTCHost: https://geip-pre.glodon.com
+gdocHost: https://api-uat.glodon.com
+gccsHost: https://gccstest.glodon.com
+PTCGW: http://geip-pre.glodon.com:8088
+ENTHost: https://ent.glodon.com
+UCHost: https://account.glodon.com
+UCAppKey: q4fPKahWSKp43eWIstLSqGEJrJIuS7tr
+UCAppSecret: AjerP3UkFwsbb6t5ZOIwqzqjN86DoDfG
+PTCAppKey: bf7cb34a0d4d4b65b53561f90b62bd84
+PTCAppSecret: ba95f4cdcd734c96aa856e2af91c7d3e
+GDOCAppKey: 8ZaEwM73Nw1kKCvX1kOa0ZvyVjQSIrBH
+GDOCAppSecret: rsNCGYz7SdOImxYlZZHjRSSVC96x0ZJr
+GDOCAppKey2: CkHorSCQuBQwNhgHiKgvPPNWsYYprmXj
+GDOCAppSecret2: IGq8NEXzawa8mLwGkxBBBWjGARo2Yxm
+##################################
+#space component
+#################################
+# 组合空间租户2：gms_wangjt-d_18
+enterpriseTenantName02: storageUser26@storageAuto05
+enterpriseId02: 6760880117810909693
+enterpriseTenantId02: 892142883026944
+enterpriseFullOrgId02: 889836594413568
+enterpriseOrgId02: 889836594413568
+#attachWsAuto01
+tenantId2: 907316272674816
+tenantId3: 907316272674816
+userName2: attachWsAuto01
+userName3: test1@attachspace01
+userName4: test1@attachspace01
+password2: 1234qwer!@#
+userId3: 7221340583730336455
+enterpriseId2: 7221338712280429007
+#test2@wockspaceGroup2
+account_user_id1: 7250022750386127135
+#attachKey为项目id或者项目id+单据
+attachValue: 919473177162240
+#项目空间id
+WsId3: 2149a79646a142bca9d6e2c3e7347952
+WsId_trash: 41bec077990443f58a143c9690c3f79c
+#企业空间id
+enterpriseWsId2: 46177f8bf47c4f9da5b749acbb45a8bb
+orgId2: 947519428149760
+orgId3: 919473177039361
+#模型信息
+shareToken: qtSkyA
+FileId2: 6d9761df44914d3f87a67f45b227a73f
+#自定义空间id-通过gccs查询空间列表
+customWsId: b1e411d173f346aa8091118e4bb6c5e6
+##################################
+# workspace group
+#################################
+tenant01Name: wockspaceGroup1
+tenant01Password: 1234qwer!@#
+tenant01RootOrgId: 947884238795264
+tenant01EnterpriseId: 7250432713757025166
+tenant01Id: 921863274477568
+#组合空间租户2：wockspaceGroup2
+wsGroupTenantName02: wockspaceGroup2
+wsGroupUserName2: test1@wockspaceGroup2
+userName1: cloudspace_tenant10
+PassWord1: 1234qwer!@#
+wsGroupTenantId2: 897757644699648
+wsGroupEnterpriseId02: 7202221287664575245
+wsGroupEnterpriseTenantId02: 897757644699648
+wsGroupEnterpriseFullOrgId02: 900802928533504
+
+space_tenantName01: attachWsAuto01
+space_tenantPassword01: 1234qwer!@#
+space_tenantRootOrgId01: 919472128209408
+space_tenantEnterpriseId01: 7221338712280429007
+space_tenantId01: 907316272674816
+
+space_tenantName02: attachWsAuto01
+space_tenantPassword02: 1234qwer!@#
+space_tenantRootOrgId02: 919472128209408
+space_tenantEnterpriseId02: 7221338712280429007
+space_tenantId02: 907316272674816
+space_tenantCustomWsId02: b1e411d173f346aa8091118e4bb6c5e6
+
+
+

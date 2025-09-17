@@ -1,0 +1,151 @@
+# 文件上传模块测试数据配置
+# 该文件仅包含测试场景需要的具体数据，不包含环境或依赖配置
+module: file_upload
+
+# 测试文件配置 - 实际测试文件
+files:
+  # 正常测试文件
+  normal:
+    - name: test.txt
+      path: src/test/resources/testdata/test/files/test.txt
+      type: text/plain
+      size: 1024
+      content: "测试文件内容 - 正常上传测试"
+    - name: test.pdf
+      path: src/test/resources/testdata/test/files/test.pdf
+      type: application/pdf
+      size: 2048
+      content: "PDF测试文档内容"
+    - name: test.jpg
+      path: src/test/resources/testdata/test/files/test.jpg
+      type: image/jpeg
+      size: 5120
+      content: "图片测试文件"
+
+  # 边界测试文件
+  boundary:
+    empty:
+      name: empty.txt
+      path: src/test/resources/testdata/test/files/empty.txt
+      type: text/plain
+      size: 0
+      content: ""
+    
+    large:
+      name: large_file.zip
+      path: src/test/resources/testdata/test/files/large_file.zip
+      type: application/zip
+      size: 10485760  # 10MB
+      content: "大文件测试内容"
+    
+    special:
+      name: "test@#$%^&*.txt"
+      path: src/test/resources/testdata/test/files/special_chars.txt
+      type: text/plain
+      size: 512
+      content: "特殊字符文件名测试"
+
+# 测试场景数据映射
+# 每个测试场景对应的具体测试数据
+testData:
+  # 正常上传场景
+  normal_upload:
+    description: "正常文件上传测试"
+    request:
+      workspaceId: "workspace_001"
+      folderId: "folder_001"
+      tags: ["测试", "文档"]
+      metadata:
+        author: "测试用户"
+        category: "测试文件"
+    expected:
+      statusCode: 200
+      responseTime: 5000  # 5秒内
+      fileId: "not_empty"
+      fileUrl: "starts_with_http"
+
+  # 空文件上传场景
+  empty_file:
+    description: "空文件上传测试"
+    request:
+      workspaceId: "workspace_001"
+      fileName: "empty.txt"
+    expected:
+      statusCode: 400
+      errorCode: "FILE_EMPTY"
+      errorMessage: "文件不能为空"
+
+  # 大文件上传场景
+  large_file:
+    description: "大文件上传测试"
+    request:
+      workspaceId: "workspace_001"
+      fileName: "large_file.zip"
+    expected:
+      statusCode: 200
+      responseTime: 30000  # 30秒内
+      fileSize: 10485760
+
+  # 特殊字符文件名场景
+  special_chars_filename:
+    description: "特殊字符文件名测试"
+    request:
+      workspaceId: "workspace_001"
+      fileName: "test@#$%^&*.txt"
+    expected:
+      statusCode: 200
+      fileName: "test@#$%^&*.txt"
+
+  # 无效文件类型场景
+  invalid_file_type:
+    description: "无效文件类型测试"
+    request:
+      workspaceId: "workspace_001"
+      fileName: "invalid.exe"
+      fileType: "application/x-msdownload"
+    expected:
+      statusCode: 415
+      errorCode: "UNSUPPORTED_FILE_TYPE"
+      errorMessage: "不支持的文件类型"
+
+  # 缺少必需参数场景
+  missing_required_param:
+    description: "缺少必需参数测试"
+    request:
+      fileName: "test.txt"
+      # 故意缺少workspaceId
+    expected:
+      statusCode: 400
+      errorCode: "MISSING_PARAMETER"
+      errorMessage: "缺少必需参数"
+
+  # 无效认证场景
+  invalid_auth:
+    description: "无效认证测试"
+    request:
+      workspaceId: "workspace_001"
+      fileName: "test.txt"
+    expected:
+      statusCode: 401
+      errorCode: "UNAUTHORIZED"
+      errorMessage: "认证失败"
+
+# 响应验证模板
+validation:
+  common:
+    requiredFields: ["code", "message", "data"]
+    dataFields: ["fileId", "fileName", "fileUrl", "fileSize", "uploadTime"]
+  
+  success:
+    code: 0
+    message: "success"
+    data:
+      fileId: "string_not_empty"
+      fileUrl: "url_valid"
+      fileSize: "number"
+      uploadTime: "timestamp"
+  
+  error:
+    code: "error_code"
+    message: "error_message"
+    data: null
